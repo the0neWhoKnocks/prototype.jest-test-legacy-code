@@ -1,0 +1,39 @@
+{
+  "name": "prototype.jest",
+  "version": "1.0.0",
+  "description": "Testing Legacy Code with Jest",
+  "main": "index.js",
+  "engines": {
+    "node": ">=4.5.0"
+  },
+  "engine-strict": true,
+  "scripts": {
+    "jest": "node conf.jest.js && jest --config ./gen.conf.jest.json",
+    "jest-watch": "node conf.jest.js && jest --watch --config ./gen.conf.jest.json",
+    "jest-watch-all": "node conf.jest.js && jest --watchAll --config ./gen.conf.jest.json",
+    "test": "npm run jest",
+    "test-watch": "npm run jest-watch",
+    "test-watch-all": "npm run jest-watch-all"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the0neWhoKnocks/prototype.jest-test-legacy-code.git"
+  },
+  "author": "Trevor Lemon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/the0neWhoKnocks/prototype.jest-test-legacy-code/issues"
+  },
+  "homepage": "https://github.com/the0neWhoKnocks/prototype.jest-test-legacy-code#readme",
+  "devDependencies": {
+    "babel-plugin-transform-object-assign": "6.22.0",
+    "babel-preset-es2015": "6.24.1",
+    "chai": "3.5.0",
+    "glob-all": "3.1.0",
+    "handlebars": "4.0.6",
+    "jest": "19.0.2",
+    "jest-teamcity-reporter": "0.6.2",
+    "sinon": "1.17.6",
+    "sinon-chai": "2.8.0"
+  }
+}

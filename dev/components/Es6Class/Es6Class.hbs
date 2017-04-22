@@ -1,0 +1,20 @@
+<div class="{{cssClassPrefix}}container">
+  <nav class="{{cssClassPrefix}}nav">
+  {{#each navURLs as |$navURL|}}
+    <a class="{{@root.cssClassPrefix}}nav-item {{@root.jsPrefix}}NavItem" href="{{url}}">{{label}}</a>
+    {{#if subItems}}
+      <nav class="{{cssClassPrefix}}sub-nav">
+      {{#each subItems}}
+        <a class="{{@root.cssClassPrefix}}nav-item {{@root.jsPrefix}}NavItem" href="{{$navURL.url}}{{url}}">{{label}}</a>
+      {{/each}}
+      </nav>
+    {{/if}}
+  {{/each}}
+  {{#if user}}
+    <a 
+      class="{{@root.cssClassPrefix}}nav-item {{@root.cssModifierPrefix}}is--logout {{@root.jsPrefix}}NavItem {{@root.jsPrefix}}LogOutItem" 
+      href="{{user.logoutURL}}"
+    >{{user.logoutLabel}}</a>
+  {{/if}}
+  </nav>
+</div>
