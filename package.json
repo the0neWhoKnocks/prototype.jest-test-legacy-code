@@ -8,9 +8,10 @@
   },
   "engine-strict": true,
   "scripts": {
-    "jest": "node conf.jest.js && jest --config ./gen.conf.jest.json",
-    "jest-watch": "node conf.jest.js && jest --watch --config ./gen.conf.jest.json",
-    "jest-watch-all": "node conf.jest.js && jest --watchAll --config ./gen.conf.jest.json",
+    "generate-config": "node conf.jest.js",
+    "jest": "npm run generate-config && jest --config ./gen.conf.jest.json",
+    "jest-watch": "npm run generate-config && jest --watch --config ./gen.conf.jest.json",
+    "jest-watch-all": "npm run generate-config && jest --watchAll --config ./gen.conf.jest.json",
     "test": "npm run jest",
     "test-watch": "npm run jest-watch",
     "test-watch-all": "npm run jest-watch-all"
