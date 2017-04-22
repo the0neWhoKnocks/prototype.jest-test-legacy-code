@@ -1,0 +1,11 @@
+{{load "lib.utils.helpers"}}
+
+{{#if data}}
+<div id="es5Module" class="es5-module">
+	Hello {{print data.msg}}
+  
+  <script type="text/javascript">var fu = 'bar';</script>
+</div>
+{{else}}
+<div>Sorry, no data provided</div>
+{{/if}}
