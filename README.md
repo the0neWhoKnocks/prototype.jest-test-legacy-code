@@ -6,9 +6,21 @@ data/function bleed?
 
 ---
 
+## What This Repo Demonstrates
+
+- How to use a JS config for Jest instead of a JSON file. `conf.jest.js` 
+  generates a JSON file for `jest` and exports a `module` for use anywhere else 
+  in your app.
+- How to generate coverage for legacy files that were added via `document.body.innerHTML`.
+- How to run legacy and ES6 code, and their tests together.
+- How to shim up the `document`/`window` so that you can easily set things like
+  `location`, `userAgent`, or `localStorage`.
+
+---
+
 ## Install
 
-```
+```sh
 npm i
 ```
 
@@ -21,7 +33,7 @@ npm i
 npm test [--] [args]
 npm test -- folder.filename
 # Use this to test/watch an individual file
-npm run test-watch [--] [args]
+npm run test-watch -- <args>
 npm run test-watch -- folder.filename
 # Use this to test/watch all files
 npm run test-watch-all
@@ -35,6 +47,8 @@ that when a dev edits one test, they don't have to worry about breaking others.
 Jest utilizes jsDom, so if you find that you're getting errors because it can't
 access a standard `window` or `document` property, head over to 
 `test/_shims/document.js` and add in whatever you need.
+
+---
 
 ## Notes About Writing Tests
 
