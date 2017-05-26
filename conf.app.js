@@ -1,4 +1,6 @@
 var path = require('path');
+
+var SCRIPTS_REL = './src/scripts';
 var conf;
 
 function normalizePath(path){
@@ -8,10 +10,11 @@ function normalizePath(path){
 conf = {
   paths: {
     APP_ROOT: normalizePath(path.resolve(__dirname)),
-    COMPONENTS: normalizePath(path.resolve(__dirname, `./dev/components`)),
-    SCRIPTS: normalizePath(path.resolve(__dirname, `./src/scripts`)),
-    TEMPLATES: normalizePath(path.resolve(__dirname, `./src/templates`)),
-    TESTS: normalizePath(path.resolve(__dirname, `./test`))
+    COMPONENTS: normalizePath(path.resolve(__dirname, './dev/components')),
+    SCRIPTS: normalizePath(path.resolve(__dirname, SCRIPTS_REL)),
+    SCRIPTS_REL: SCRIPTS_REL,
+    TEMPLATES: normalizePath(path.resolve(__dirname, './src/templates')),
+    TESTS: normalizePath(path.resolve(__dirname, './test'))
   }
 };
 
