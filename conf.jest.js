@@ -50,9 +50,9 @@ var conf = {
   coverageThreshold: {
     global: {
       branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100
+      functions: 72.73,
+      lines: 82.93,
+      statements: 82.93
     }
   },
   // A map from regular expression to module names that allow you to stub out resources, like images or styles with a single module.
@@ -111,6 +111,42 @@ function getFileNames(paths){
   return names;
 }
 
+/**
+ * Creates a list of Nike related files that don't have tests associated with them
+ * yet. Jest will then add them as uncovered to the coverage.
+ * @returns {Array}
+ */
+function getUncoveredFiles(){
+  var SRC_FILES = globAll.sync([
+    `${appConfig.paths.SCRIPTS}/**/*.js`,
+    `!${appConfig.paths.SCRIPTS}/**/*.min.js`
+  ]);
+  var TEST_FILES = globAll.sync([
+    `${appConfig.paths.TESTS}/**`,
+    `!${appConfig.paths.TESTS}/{${ TEST_SETUP_DIRS.join(',') }}/**`
+  ]);
+  var uncoveredFiles = [];
+  var testFilesStr, i;
+
+  for(i=0; i<TEST_FILES.length; i++){
+    TEST_FILES[i] = TEST_FILES[i].replace(`${appConfig.paths.TESTS}/scripts`, '').replace('.test.js', '');
+  }
+  testFilesStr = TEST_FILES.join('|');
+
+  for(i=0; i<SRC_FILES.length; i++){
+    var srcPath = SRC_FILES[i].replace(appConfig.paths.SCRIPTS, '').replace('.js', '');
+
+    // has a test file so skip
+    if( testFilesStr.indexOf(srcPath) > -1 ) continue;
+    // anything in the root is most likely an external library or framework so skip
+    if( srcPath.indexOf('/lib') !== 0 ) continue;
+
+    uncoveredFiles.push(srcPath+'.js');
+  }
+
+  return uncoveredFiles;
+}
+
 // setup for TeamCity
 if( process.env.TEAMCITY_VERSION ){
   conf.collectCoverage = false;
@@ -118,7 +154,17 @@ if( process.env.TEAMCITY_VERSION ){
 }
 
 // allows from running from CLI
-if( require.main === module ){
+if( !module.parent ){
+  /**
+   * In order for coverage to be generated for uncovered files, we have to get a
+   * list of files from src/scripts, and trim out the files that already have
+   * test files associated. Normally you'd just add the source path to `collectCoverageFrom`
+   * but we have to instrument our legacy files manually so those have to be filtered out.
+   */
+  if( conf.collectCoverage ){
+    conf.collectCoverageFrom.push( `**/${ appConfig.paths.SCRIPTS_REL.replace('./','') }{${ getUncoveredFiles().join(',') }}` );
+  }
+  
   try{
     fs.writeFileSync(OUTPUT_NAME, JSON.stringify(conf, null, 2), 'utf8');
     console.log('[GENERATED] Jest config');
